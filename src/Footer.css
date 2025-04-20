@@ -1,0 +1,17 @@
+.Footer {
+  height: 15vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(/src/imgs/footer-img.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.Footer a {
+  color: white;
+}
+
+.Footer p {
+  color: white;
+  text-align: center;
+  padding-top: 3.5em;
+}
