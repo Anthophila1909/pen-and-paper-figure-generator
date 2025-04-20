@@ -12,25 +12,63 @@
   margin-bottom: 1em;
 }
 
+.GeneratorApp .form-group {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+  justify-content: flex-start;
+}
+
 .GeneratorApp form label {
   font-size: 1.3em;
   color: var(--primary-text-color);
+  font-weight: 600;
+}
+
+.GeneratorApp .form-group label {
+  width: 9.8em;
+  text-align: right;
 }
 
 .GeneratorApp form input[type="text"] {
-  width: 35%;
+  width: 100%;
   padding: 0.5em;
   border: none;
   border-radius: 5px;
   font-size: 1.2em;
 }
 
+.GeneratorApp .generator-entscheidung h2 {
+  margin-top: 1em;
+}
+
+.GeneratorApp .radio-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+  justify-content: center;
+}
+
+.GeneratorApp .radio-group input[type="radio"] {
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+
 .GeneratorApp form input[type="submit"] {
   background-color: var(--primary-color);
   color: var(--secondary-color);
-  border: none;
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
   padding: 0.5em 1em;
   font-size: 1.2em;
+  margin-top: 2em;
   cursor: pointer;
+  transition: ease-in-out 0.1s all;
+}
+
+.GeneratorApp form input[type="submit"]:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }
