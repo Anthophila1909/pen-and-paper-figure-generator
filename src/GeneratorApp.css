@@ -1,0 +1,36 @@
+.GeneratorApp {
+  min-height: 80vh;
+  background-color: var(--secondary-color);
+  padding: 5em;
+  color: var(--primary-text-color);
+  text-align: center;
+}
+
+.GeneratorApp h2 {
+  color: var(--primary-color);
+  line-height: 1.5;
+  margin-bottom: 1em;
+}
+
+.GeneratorApp form label {
+  font-size: 1.3em;
+  color: var(--primary-text-color);
+}
+
+.GeneratorApp form input[type="text"] {
+  width: 35%;
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+}
+
+.GeneratorApp form input[type="submit"] {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  font-size: 1.2em;
+  cursor: pointer;
+}

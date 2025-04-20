@@ -1,5 +1,7 @@
 :root {
-  --primary-color: #240a34;
+  --primary-color: #bf8b67;
+  --secondary-color: #fcf8e8;
+  --primary-text-color: #2d2424;
 }
 
 .App {
