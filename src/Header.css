@@ -1,0 +1,25 @@
+.Header {
+  height: 40vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(/src/imgs/dice-header.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.Header h1,
+.Header h2 {
+  color: white;
+  text-align: center;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.Header h1 {
+  font-size: 4em;
+  padding-top: 1.3em;
+}
+
+.Header h2 {
+  font-size: 2em;
+  margin-top: 0.5em;
+}

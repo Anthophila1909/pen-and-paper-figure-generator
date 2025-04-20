@@ -1,8 +1,9 @@
-.App {
-  background-color: #282c34;
-  min-height: 100vh;
+:root {
+  --primary-color: #240a34;
 }
 
-h1 {
-  color: white;
+.App {
+  min-height: 100vh;
+  font-family: "Nunito Sans", sans-serif;
+  background-color: var(--primary-color);
 }
