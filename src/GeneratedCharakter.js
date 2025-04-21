@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./GeneratedCharakter.css";
+import LoadingBar from "./LoadingBar";
 
 export default function GeneratedCharakter({ charakter, generatorOptionen }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,7 +34,7 @@ export default function GeneratedCharakter({ charakter, generatorOptionen }) {
       {isSubmitted && (
         <div className="GeneratedCharakter">
           {loading ? (
-            <p>Wird geladen...</p>
+            <LoadingBar />
           ) : (
             <div dangerouslySetInnerHTML={{ __html: antwort }} />
           )}
