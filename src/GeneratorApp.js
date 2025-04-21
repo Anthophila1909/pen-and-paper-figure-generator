@@ -1,10 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import "./GeneratorApp.css";
+import GeneratedCharakter from "./GeneratedCharakter";
 
 export default function GeneratorApp() {
+  const [charakter, setCharakter] = useState({
+    setting: "",
+    geschlecht: "",
+    klasse: "",
+    genre: "",
+    stärken: "",
+    schwächen: "",
+    vergangenheit: "",
+    wunsch: "",
+    besitz: "",
+  });
+
+  const [generatorOptionen, setGeneratorOptionen] = useState("");
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setCharakter((prevCharakter) => ({
+      ...prevCharakter,
+      [name]: value,
+    }));
+  }
+
+  function handleRadioChange(event) {
+    setGeneratorOptionen(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setIsSubmitted(true);
+  }
+
   return (
     <div className="GeneratorApp">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col basisinformationen">
             <h2>Basis-Informationen:</h2>
@@ -15,6 +49,8 @@ export default function GeneratorApp() {
                 placeholder="Cthulhu 1920er, Cyberpunk Tokyo, ..."
                 name="setting"
                 id="setting"
+                value={charakter.setting}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -24,6 +60,8 @@ export default function GeneratorApp() {
                 type="text"
                 placeholder="weiblich, non-binär, ..."
                 name="geschlecht"
+                value={charakter.geschlecht}
+                onChange={handleChange}
                 id="geschlecht"
               />
             </div>
@@ -34,6 +72,8 @@ export default function GeneratorApp() {
                 placeholder="Krieger, Magierin, Professorin, ..."
                 name="klasse"
                 id="klasse"
+                value={charakter.klasse}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -43,6 +83,8 @@ export default function GeneratorApp() {
                 placeholder="Grusel, Noir, Komödie, düster, ..."
                 name="genre"
                 id="genre"
+                value={charakter.genre}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -55,6 +97,8 @@ export default function GeneratorApp() {
                 placeholder="mutig, neugierig, redegewandt, ..."
                 name="stärken"
                 id="stärken"
+                value={charakter.stärken}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -64,6 +108,8 @@ export default function GeneratorApp() {
                 placeholder="Angst bei Dunkelheit, stur, impulsiv, ..."
                 name="schwächen"
                 id="schwächen"
+                value={charakter.schwächen}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -73,6 +119,8 @@ export default function GeneratorApp() {
                 placeholder="verlor Schwester im Krieg, ..."
                 name="vergangenheit"
                 id="vergangenheit"
+                value={charakter.vergangenheit}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -82,6 +130,8 @@ export default function GeneratorApp() {
                 placeholder="will das Rätsel um ihren Vater lösen, ..."
                 name="wunsch"
                 id="wunsch"
+                value={charakter.wunsch}
+                onChange={handleChange}
               />
             </div>
             <div className="form-group">
@@ -91,6 +141,8 @@ export default function GeneratorApp() {
                 placeholder="zerknitterter Liebesbrief, Dolch, ..."
                 name="besitz"
                 id="besitz"
+                value={charakter.besitz}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -103,6 +155,8 @@ export default function GeneratorApp() {
               name="generatorOptionen"
               value="hintergrundgeschichte"
               id="hintergrundgeschichte"
+              checked={generatorOptionen === "hintergrundgeschichte"}
+              onChange={handleRadioChange}
             />
             <label htmlFor="hintergrundgeschichte">
               Nur Hintergrundgeschichte
@@ -114,6 +168,8 @@ export default function GeneratorApp() {
               name="generatorOptionen"
               value="werte"
               id="werte"
+              checked={generatorOptionen === "werte"}
+              onChange={handleRadioChange}
             />
             <label htmlFor="werte">Nur Werte / Attributsprofil</label>
           </div>
@@ -121,16 +177,24 @@ export default function GeneratorApp() {
             <input
               type="radio"
               name="generatorOptionen"
-              value="kompletter-charaker"
-              id="kompletter-charaker"
+              value="kompletter-charakter"
+              id="kompletter-charakter"
+              checked={generatorOptionen === "kompletter-charakter"}
+              onChange={handleRadioChange}
             />
-            <label htmlFor="kompletter-charaker">
+            <label htmlFor="kompletter-charakter">
               Beides kombiniert (kompletter Charakter)
             </label>
           </div>
           <input type="submit" value="Generieren" />
         </div>
       </form>
+      {isSubmitted && (
+        <GeneratedCharakter
+          charakter={charakter}
+          generatorOptionen={generatorOptionen}
+        />
+      )}
     </div>
   );
 }
