@@ -13,7 +13,7 @@ export default function Footer() {
         >
           Elena Würtz
         </a>{" "}
-        auf{" "}
+        geschrieben. Publiziert auf{" "}
         <a
           href="https://github.com/Anthophila1909/pen-and-paper-figure-generator"
           target="_blank"
@@ -21,7 +21,15 @@ export default function Footer() {
         >
           GitHub
         </a>
-        {""} geschrieben. Open-sourced auf <a href="/">Netlify</a>.
+        {""} und open-sourced via{" "}
+        <a
+          href="https://game-charakter-generator.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Netlify
+        </a>
+        .
       </p>
     </div>
   );
