@@ -1,40 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./GeneratedCharakter.css";
 
 export default function GeneratedCharakter({ charakter, generatorOptionen }) {
+  const [antwort, setAntwort] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    function fetchKI() {
+      setLoading(true);
+      const apiKey = "93tdd4d3b4c2db3bcc87b00foc83ce4a";
+      const context =
+        "Du bist ein kreativer und erfidungsreicher KI-Charaktergenerator für Rollenspiele. Du generierst Charaktere basierend auf den Informationen, die der Nutzer dir gibt. Du gibst die Informationen in einem Textblock zurück, der die folgenden Punkte enthält: Setting, Geschlecht, Klasse, Genre, Stärken, Schwächen, Vergangenheit, Wunsch und Besitz. Die Informationen sind in einem Textblock zusammengefasst und nicht in einer Liste. Der Textblock ist in deutscher Sprache verfasst.";
+      const prompt = `Erstelle eine ${generatorOptionen} für folgenden Charakter: Setting: ${charakter.setting}, Geschlecht: ${charakter.geschlecht}, Rolle: ${charakter.klasse}, Genre: ${charakter.genre}, Stärken: ${charakter.stärken}, Schwächen: ${charakter.schwächen}, Vergangenheit: ${charakter.vergangenheit}, Wunsch: ${charakter.wunsch}, Besitz: ${charakter.besitz}`;
+
+      const apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
+
+      axios.get(apiUrl).then((response) => {
+        setAntwort(response.data.answer);
+        setLoading(false);
+      });
+    }
+    fetchKI();
+  }, [charakter, generatorOptionen]);
+
   return (
-    <div>
+    <div className="GeneratedCharakter">
       <h2>Generierter Charakter</h2>
-      <p>
-        <strong>Setting:</strong> {charakter.setting}
-      </p>
-      <p>
-        <strong>Geschlecht:</strong> {charakter.geschlecht}
-      </p>
-      <p>
-        <strong>Beruf/Klasse:</strong> {charakter.klasse}
-      </p>
-      <p>
-        <strong>Genre:</strong> {charakter.genre}
-      </p>
-      <p>
-        <strong>Stärken:</strong> {charakter.stärken}
-      </p>
-      <p>
-        <strong>Schwächen:</strong> {charakter.schwächen}
-      </p>
-      <p>
-        <strong>Wichtige Vergangenheit:</strong> {charakter.vergangenheit}
-      </p>
-      <p>
-        <strong>Wunsch/Ziel:</strong> {charakter.wunsch}
-      </p>
-      <p>
-        <strong>Besonderer Besitz:</strong> {charakter.besitz}
-      </p>
-      <p>
-        <strong>Generierte Option:</strong> {generatorOptionen}
-      </p>
+      {loading ? <p>Wird geladen...</p> : <p>{antwort}</p>}
     </div>
   );
 }
