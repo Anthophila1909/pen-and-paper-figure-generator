@@ -21,9 +21,9 @@
 }
 
 .GeneratorApp form label {
-  font-size: 1.3em;
+  font-size: 1.2em;
   color: var(--primary-text-color);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .GeneratorApp .form-group label {
