@@ -1,0 +1,15 @@
+.GeneratedCharakter h2 {
+  margin-top: 2em;
+}
+
+.GeneratedCharakter h3 {
+  font-size: 1.2em;
+  text-align: left;
+  color: var(--primary-color);
+}
+
+.GeneratedCharakter p,
+.GeneratedCharakter li {
+  font-size: 1.1em;
+  text-align: left;
+}

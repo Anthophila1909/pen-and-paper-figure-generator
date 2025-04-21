@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./GeneratorApp.css";
-import GeneratedCharakter from "./GeneratedCharakter";
+import "./GeneratedCharakter.css";
 
 export default function GeneratorApp() {
   const [charakter, setCharakter] = useState({
@@ -16,8 +17,9 @@ export default function GeneratorApp() {
   });
 
   const [generatorOptionen, setGeneratorOptionen] = useState("");
-
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [antwort, setAntwort] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -34,6 +36,20 @@ export default function GeneratorApp() {
   function handleSubmit(event) {
     event.preventDefault();
     setIsSubmitted(true);
+    setLoading(true);
+
+    const apiKey = "93tdd4d3b4c2db3bcc87b00foc83ce4a";
+    const context =
+      "Du bist ein kreativer KI-Charaktergenerator für Pen and Paper-Rollenspiele. Erstelle einen fiktiven Charakter auf Grundlage der Eingaben des Nutzenden und fülle fehlende Informationen selbstständig aus. Gib die Charakterbeschreibung als reinen HTML-String zurück - ohne Einleitung, ohne Format-Erklärung, ohne zusätzliche Textinfos. Verwende echte HTML-Tags (zum Beispiel <h2>, <ul>, <li>, <p>) im Output, aber schreibe sie nicht als Text. Gib nur den HTML-Code zurück, der im Browser direkt dargestellt werden kann. Die Beschreibung soll auf Deutsch geschrieben sein. Stelle den Namen des Charakter ganz oben als <h2> dar. Sei kreativ und gebe dem Charakter tiefe, viele Hintergrundinformationen und -details und beende die Sätze mit einem Punkt. Gebe gerne jeweils Erklärungen für die Stärken/Schwächen des Charakters um ihm noch mehr tiefe zu verleihen. Führe die Hintergrundgeschichte bei Bedarf ausführlich aus.";
+
+    const prompt = `Erstelle eine ${generatorOptionen} für folgenden Charakter: Setting: ${charakter.setting}, Geschlecht: ${charakter.geschlecht}, Rolle: ${charakter.klasse}, Genre: ${charakter.genre}, Stärken: ${charakter.stärken}, Schwächen: ${charakter.schwächen}, Vergangenheit: ${charakter.vergangenheit}, Wunsch: ${charakter.wunsch}, Besitz: ${charakter.besitz}`;
+
+    const apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
+
+    axios.get(apiUrl).then((response) => {
+      setAntwort(response.data.answer);
+      setLoading(false);
+    });
   }
 
   return (
@@ -60,9 +76,9 @@ export default function GeneratorApp() {
                 type="text"
                 placeholder="weiblich, non-binär, ..."
                 name="geschlecht"
+                id="geschlecht"
                 value={charakter.geschlecht}
                 onChange={handleChange}
-                id="geschlecht"
               />
             </div>
             <div className="form-group">
@@ -90,6 +106,7 @@ export default function GeneratorApp() {
           </div>
           <div className="col charakterkontext">
             <h2>Charakterkontext:</h2>
+            {/* ... deine restlichen Felder */}
             <div className="form-group">
               <label htmlFor="stärken">Stärken:</label>
               <input
@@ -147,18 +164,19 @@ export default function GeneratorApp() {
             </div>
           </div>
         </div>
+
         <div className="generator-entscheidung">
           <h2>Was soll generiert werden?</h2>
           <div className="radio-group">
             <input
               type="radio"
               name="generatorOptionen"
-              value="hintergrundgeschichte"
-              id="hintergrundgeschichte"
-              checked={generatorOptionen === "hintergrundgeschichte"}
+              value="nur-hintergrundgeschichte"
+              id="nur-hintergrundgeschichte"
+              checked={generatorOptionen === "nur-hintergrundgeschichte"}
               onChange={handleRadioChange}
             />
-            <label htmlFor="hintergrundgeschichte">
+            <label htmlFor="nur-hintergrundgeschichte">
               Nur Hintergrundgeschichte
             </label>
           </div>
@@ -166,34 +184,43 @@ export default function GeneratorApp() {
             <input
               type="radio"
               name="generatorOptionen"
-              value="werte"
-              id="werte"
-              checked={generatorOptionen === "werte"}
+              value="nur-werte-atributprofil"
+              id="nur-werte-atributprofil"
+              checked={generatorOptionen === "nur-werte-atributprofil"}
               onChange={handleRadioChange}
             />
-            <label htmlFor="werte">Nur Werte / Attributsprofil</label>
+            <label htmlFor="nur-werte-atributprofil">
+              Nur Werte / Attributsprofil
+            </label>
           </div>
           <div className="radio-group">
             <input
               type="radio"
               name="generatorOptionen"
-              value="kompletter-charakter"
-              id="kompletter-charakter"
-              checked={generatorOptionen === "kompletter-charakter"}
+              value="kompletter-charakter-mit-hintergrund-und-werte"
+              id="kompletter-charakter-mit-hintergrund-und-werte"
+              checked={
+                generatorOptionen ===
+                "kompletter-charakter-mit-hintergrund-und-werte"
+              }
               onChange={handleRadioChange}
             />
-            <label htmlFor="kompletter-charakter">
+            <label htmlFor="kompletter-charakter-mit-hintergrund-und-werte">
               Beides kombiniert (kompletter Charakter)
             </label>
           </div>
           <input type="submit" value="Generieren" />
         </div>
       </form>
+
       {isSubmitted && (
-        <GeneratedCharakter
-          charakter={charakter}
-          generatorOptionen={generatorOptionen}
-        />
+        <div className="GeneratedCharakter">
+          {loading ? (
+            <p>Wird geladen...</p>
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html: antwort }} />
+          )}
+        </div>
       )}
     </div>
   );
